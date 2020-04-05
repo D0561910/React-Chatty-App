@@ -11,7 +11,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import { auth } from "./services/firebase";
 import './styles.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PrivateRoute({ component: Component, authenticated, ...rest }) {
   return (
