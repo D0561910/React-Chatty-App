@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { signin, signInWithGoogle, signInWithGitHub } from "../helpers/auth";
+import {
+  signin,
+  signInWithFacebook,
+  signInWithGoogle,
+  signInWithGitHub,
+} from "../helpers/auth";
 
 export default class Login extends Component {
   constructor() {
@@ -12,6 +17,7 @@ export default class Login extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.facebookSignIn = this.facebookSignIn.bind(this);
     this.googleSignIn = this.googleSignIn.bind(this);
     this.githubSignIn = this.githubSignIn.bind(this);
   }
@@ -27,6 +33,14 @@ export default class Login extends Component {
     this.setState({ error: "" });
     try {
       await signin(this.state.email, this.state.password);
+    } catch (error) {
+      this.setState({ error: error.message });
+    }
+  }
+
+  async facebookSignIn() {
+    try {
+      await signInWithFacebook();
     } catch (error) {
       this.setState({ error: error.message });
     }
@@ -94,6 +108,13 @@ export default class Login extends Component {
             </button>
           </div>
           <p>You can also log in with any of these services</p>
+          <button
+            className="btn btn-primary mr-2"
+            type="button"
+            onClick={this.facebookSignIn}
+          >
+            Sign in with Facebook
+          </button>
           <button
             className="btn btn-danger mr-2"
             type="button"
